@@ -1,18 +1,6 @@
 name: Auto Deploy Pipeline
 on:
-  deployment:
-  push:
-    branches-ignore:
-      - x*
-    paths-ignore:
-      - .github/
-      - .gitignore
-      - .settings/
-      - README.md
-      - docs/
-  release:
-    types:
-      - published
+  workflow_call:
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -68,4 +56,3 @@ jobs:
       run: ${TOOLS_PATH}/scripts/docker_build.sh
     - name: Deploy to Target Environment
       run: ${TOOLS_PATH}/scripts/deploy.sh
-      
