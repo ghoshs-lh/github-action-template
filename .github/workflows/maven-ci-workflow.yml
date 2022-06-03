@@ -1,0 +1,71 @@
+name: Auto Deploy Pipeline
+on:
+  deployment:
+  push:
+    branches-ignore:
+      - x*
+    paths-ignore:
+      - .github/
+      - .gitignore
+      - .settings/
+      - README.md
+      - docs/
+  release:
+    types:
+      - published
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CICD_GITHUB_TOKEN: ${{ secrets.CICD_GITHUB_TOKEN }}
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+    - name: Checkout action tools
+      uses: actions/checkout@v2  
+      with:
+        repository: londonhydro/github-actions-tools
+        token: ${{ secrets.CICD_GITHUB_TOKEN }}
+        path: _tools
+    - name: Checkout Application Configuration
+      uses: actions/checkout@v2  
+      with:
+        repository: londonhydro/GCP_Application_Configuration
+        token: ${{ secrets.CICD_GITHUB_TOKEN }}
+        path: _config
+    - name: Setup tools
+      run: bash ./_tools/scripts/cicd_tools_setup.sh
+    - name: Setup Java
+      uses: actions/setup-java@v1
+      with:
+        java-version: ${{ env.JAVA_VERSION}}
+    - name: Setup Build Environment                
+      env:
+        APP_SECRETS: ${{secrets.APP_SECRETS}}
+        APP_SECRETS_ENV: ${{secrets[env.APP_SECRETS_ENV_KEY]}}
+      run: ${TOOLS_PATH}/scripts/build_setup.sh        
+    - name: Setup GCP
+      uses: google-github-actions/setup-gcloud@v0
+      with:
+        version: ${{ env.GCP_VERSION}}
+        service_account_key: ${{secrets[env.GOOGLE_APPLICATION_CREDENTIALS_KEY]}}
+    - name: GCP auth
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{secrets[env.GOOGLE_APPLICATION_CREDENTIALS_KEY]}}'        
+    - name: Code Sanitize
+      run: ${TOOLS_PATH}/scripts/code_sanitize.sh
+    - name: Build and Test
+      run: ${TOOLS_PATH}/scripts/test.sh
+    - name: Publish Result To DevOps MicroSite
+      if: (success() || failure())
+      run: ${TOOLS_PATH}/scripts/devops_site_publish.sh
+    - name: Build for Deployment
+      run: ${TOOLS_PATH}/scripts/build.sh
+    - name: Setup for Deployment
+      run: ${TOOLS_PATH}/scripts/pre_deploy_setup.sh
+    - name: Build Docker Image
+      run: ${TOOLS_PATH}/scripts/docker_build.sh
+    - name: Deploy to Target Environment
+      run: ${TOOLS_PATH}/scripts/deploy.sh
+      
