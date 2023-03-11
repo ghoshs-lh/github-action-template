@@ -5,6 +5,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      GH_TOKEN: ${{ github.token }}
       CICD_GITHUB_TOKEN: ${{ secrets.CICD_GITHUB_TOKEN }}
     steps:
     - name: Checkout Code
