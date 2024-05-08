@@ -36,7 +36,9 @@ jobs:
         APP_SECRETS_ENV: ${{secrets[env.APP_SECRETS_ENV_KEY]}}
       run: ${TOOLS_PATH}/scripts/build_setup.sh        
     - name: Check Dependabot                
-      run: ${TOOLS_PATH}/scripts/check_security.sh
+      run: |
+        echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
+        ${TOOLS_PATH}/scripts/check_security.sh
       env:
          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Setup GCP
