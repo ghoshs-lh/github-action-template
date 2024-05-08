@@ -38,9 +38,7 @@ jobs:
     - name: Check Dependabot                
       run: |
         echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
-        ${TOOLS_PATH}/scripts/check_security.sh
-      env:
-         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ${TOOLS_PATH}/scripts/check_security.sh      
     - name: Setup GCP
       uses: google-github-actions/setup-gcloud@v0
       with:
