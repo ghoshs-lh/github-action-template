@@ -1,6 +1,8 @@
 name: Auto Deploy Pipeline
 on:
   workflow_call:
+permissions: 
+  security-events: read
 jobs:
   build:
     runs-on: ubuntu-latest
