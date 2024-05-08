@@ -37,6 +37,8 @@ jobs:
       run: ${TOOLS_PATH}/scripts/build_setup.sh        
     - name: Check Dependabot                
       run: ${TOOLS_PATH}/scripts/check_security.sh
+      env:
+         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Setup GCP
       uses: google-github-actions/setup-gcloud@v0
       with:
