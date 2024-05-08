@@ -35,6 +35,8 @@ jobs:
         APP_SECRETS: ${{secrets.APP_SECRETS}}
         APP_SECRETS_ENV: ${{secrets[env.APP_SECRETS_ENV_KEY]}}
       run: ${TOOLS_PATH}/scripts/build_setup.sh        
+    - name: Check Dependabot                
+      run: ${TOOLS_PATH}/scripts/check_security.sh
     - name: Setup GCP
       uses: google-github-actions/setup-gcloud@v0
       with:
