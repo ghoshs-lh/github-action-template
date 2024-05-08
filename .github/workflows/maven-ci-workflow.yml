@@ -36,8 +36,7 @@ jobs:
         APP_SECRETS_ENV: ${{secrets[env.APP_SECRETS_ENV_KEY]}}
       run: ${TOOLS_PATH}/scripts/build_setup.sh        
     - name: Check Dependabot                
-      run: |        
-        gh api   -H "Accept: application/vnd.github+json"   -H "X-GitHub-Api-Version: 2022-11-28"   /repos/LondonHydro/iam-ms-springboot/dependabot/alerts?severity=high,critical
+      run: |
         ${TOOLS_PATH}/scripts/check_security.sh      
       env:
           GH_TOKEN: ${{ secrets.CICD_GITHUB_TOKEN}}        
