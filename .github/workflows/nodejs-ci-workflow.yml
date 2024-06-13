@@ -7,10 +7,10 @@ jobs:
     env:      
       GH_TOKEN: ${{ github.token }}
       CICD_GITHUB_TOKEN: ${{ secrets.CICD_GITHUB_TOKEN }}
-      GCP_CICD_CLIENTS_PROD: ${{env.GCP_CICD_DEVOPS_CLIENTS_PROD}}      
-      GCP_CICD_DEVOPS_CLIENTS_PROD: ${{env.GCP_CICD_DEVOPS_CLIENTS_PROD}} 
-      GCP_CICD_CLIENTS_QA: ${{env.GCP_CICD_DEVOPS_CLIENTS_QA}}
-      GCP_CICD_DEVOPS_CLIENTS_QA: ${{env.GCP_CICD_DEVOPS_CLIENTS_QA}}
+      GCP_CICD_CLIENTS_PROD: ${{vars.GCP_CICD_DEVOPS_CLIENTS_PROD}}      
+      GCP_CICD_DEVOPS_CLIENTS_PROD: ${{vars.GCP_CICD_DEVOPS_CLIENTS_PROD}} 
+      GCP_CICD_CLIENTS_QA: ${{vars.GCP_CICD_DEVOPS_CLIENTS_QA}}
+      GCP_CICD_DEVOPS_CLIENTS_QA: ${{vars.GCP_CICD_DEVOPS_CLIENTS_QA}}
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
