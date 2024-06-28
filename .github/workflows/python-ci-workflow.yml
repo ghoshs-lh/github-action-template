@@ -11,6 +11,8 @@ jobs:
       GCP_CICD_DEVOPS_CLIENTS_PROD: ${{vars.GCP_CICD_DEVOPS_CLIENTS_PROD}} 
       GCP_CICD_CLIENTS_QA: ${{vars.GCP_CICD_CLIENTS_QA}}
       GCP_CICD_DEVOPS_CLIENTS_QA: ${{vars.GCP_CICD_DEVOPS_CLIENTS_QA}}
+      GCP_CICD_CLIENTS_DEV: ${{vars.GCP_CICD_CLIENTS_DEV}}
+      GCP_CICD_DEVOPS_CLIENTS_DEV: ${{vars.GCP_CICD_DEVOPS_CLIENTS_DEV}}
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
