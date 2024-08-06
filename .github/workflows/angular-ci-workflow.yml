@@ -25,6 +25,12 @@ jobs:
         token: ${{ secrets.CICD_GITHUB_TOKEN }}
         repo-token: ${{ secrets.CICD_GITHUB_TOKEN }} 
         path: _config        
+    - name: Checkout Platform Configuration
+      uses: actions/checkout@v2  
+      with:
+        repository: londonhydro/ms-cloudplatform-configuration
+        token: ${{ secrets.CICD_GITHUB_TOKEN }}
+        path: _pconfig         
     - name: Checkout action tools
       uses: actions/checkout@v2  
       with:
