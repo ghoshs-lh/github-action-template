@@ -28,6 +28,12 @@ jobs:
         repository: londonhydro/GCP_Application_Configuration
         token: ${{ secrets.CICD_GITHUB_TOKEN }}
         path: _config
+    - name: Checkout Platform Configuration
+      uses: actions/checkout@v2  
+      with:
+        repository: londonhydro/ms-cloudplatform-configuration
+        token: ${{ secrets.CICD_GITHUB_TOKEN }}
+        path: _pconfig         
     - name: Setup tools
       run: bash ./_tools/scripts/cicd_tools_setup.sh
     - name: Use Node.js ${{ matrix.node-version }}
